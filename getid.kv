@@ -1,0 +1,124 @@
+#:kivy 1.11.0
+
+ScreenManager:
+    FirstScreen:
+        id: first_screen
+    SecondScreen:
+        id: second_screen
+    ThirdScreen:
+        id: third_screen
+
+
+<FirstScreen@Screen>:
+    name: 'firstScreen'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+        	orientation: 'vertical'
+	        TextInput:
+	            font_size: 200
+	            id: user_input1
+	            text: '191163'
+	            halign: 'center'
+	            multiline: False
+
+	        TextInput:
+	            font_size: 200
+	            id: user_input2
+	            text: ''
+	            halign: 'center'
+	            multiline: False
+
+	        TextInput:
+	            font_size: 200
+	            id: user_input3
+	            text: ''
+	            halign: 'center'
+	            multiline: False
+
+        Button:
+        	font_size: 200
+            text: 'Поиск'
+            on_release:
+                root.manager.ids.second_screen.ids.outer.text == 'None'
+                from checker import CheckTrack, rsultir
+                resultInput = user_input1.text+user_input2.text+user_input3.text
+                rsultir.clear()
+                CheckTrack(str(resultInput))
+                root.manager.ids.second_screen.ids.outer.text = str("\n\n".join(rsultir.values()))
+                root.manager.current = 'secondScreen'
+
+
+<SecondScreen@Screen>:
+    name: 'secondScreen'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            Label:
+                id: outer
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                padding: 10, 10
+                font_size: 90
+                halign: 'left'
+                text: ''
+                #text: str(root.manager.ids.first_screen.ids.user_input1.text + root.manager.ids.first_screen.ids.user_input2.text + root.manager.ids.first_screen.ids.user_input3.text)
+
+        BoxLayout:
+            size_hint: 1.0, 0.15
+            Button:
+                text: 'Поиск'
+                on_release:
+                    root.manager.current = 'firstScreen'
+            Button:
+                text: 'Календарь'
+                on_release:
+                    from calendarr import strr
+                    root.manager.ids.third_screen.ids.calen.text = strr
+                    root.manager.current = 'thirdScreen'
+            Button:
+                text: 'Почта'
+                on_release:
+                	from share import share
+                	resultInputs = str(root.manager.ids.first_screen.ids.user_input1.text+root.manager.ids.first_screen.ids.user_input2.text+root.manager.ids.first_screen.ids.user_input3.text)
+                	share(resultInputs, outer.text)
+                    root.manager.current = 'firstScreen'
+
+
+<ThirdScreen@Screen>:
+    name: 'thirdScreen'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            Label:
+                id: calen
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                padding: 10, 10
+                font_size: 100
+                halign: 'left'
+                text: ''
+
+        BoxLayout:
+            size_hint: 1.0, 0.15
+
+            Button:
+                text: 'Новый поиск'
+                on_release:
+                    root.manager.current = 'firstScreen'
+            Button:
+                text: 'Результат'
+                on_release:
+                    root.manager.current = 'secondScreen'
