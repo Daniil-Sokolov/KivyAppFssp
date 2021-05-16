@@ -1,5 +1,5 @@
-from suds.client import Client
-from dadata import Dadata
+from packss.suds.client import Client
+from packss.dadata import Dadata
 from datetime import datetime
 
 
