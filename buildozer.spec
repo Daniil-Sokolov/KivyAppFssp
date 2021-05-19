@@ -39,7 +39,7 @@ version = 0.5
 requirements = python3,kivy==1.11.0,datetime,jnius,calendar
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
-# requirements.source.kivy = ../../kivy
+# requirements.source.kivy = ./packs
 
 # (str) Presplash of the application
 #presplash.filename = %(source.dir)s/data/logo/presplash512okmin.png
